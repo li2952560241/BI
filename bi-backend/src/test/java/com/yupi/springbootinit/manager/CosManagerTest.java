@@ -1,6 +1,8 @@
 package com.yupi.springbootinit.manager;
 
 import javax.annotation.Resource;
+
+import com.dysf.bi.manager.CosManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
