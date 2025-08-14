@@ -1,12 +1,11 @@
 # 数据库初始化
-# @author <a href="https://github.com/liyupi">程序员鱼皮</a>
-# @from <a href="https://yupi.icu">编程导航知识星球</a>
+
 
 -- 创建库
-create database if not exists my_db;
+create database if not exists bi_db;
 
 -- 切换库
-use my_db;
+use bi_db;
 
 -- 用户表
 create table if not exists user
