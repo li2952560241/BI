@@ -1,25 +1,25 @@
-package com.yupi.springbootinit.manager;
+package com.dysf.bi;
 
+import com.dysf.bi.config.WxOpenConfig;
 import javax.annotation.Resource;
-
-import com.dysf.bi.manager.CosManager;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * Cos 操作测试
+ * 主类测试
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 @SpringBootTest
-class CosManagerTest {
+class MainApplicationTests {
 
     @Resource
-    private CosManager cosManager;
+    private WxOpenConfig wxOpenConfig;
 
     @Test
-    void putObject() {
-        cosManager.putObject("test", "test.json");
+    void contextLoads() {
+        System.out.println(wxOpenConfig);
     }
+
 }

@@ -1,8 +1,6 @@
-# 公共配置文件
-
 spring:
   application:
-    name: springboot-init
+    name: bi-backend
   # 默认 dev 环境
   profiles:
     active: dev
@@ -89,14 +87,3 @@ cos:
     secretKey: xxx
     region: xxx
     bucket: xxx
-# 接口文档配置
-knife4j:
-  enable: true
-  openapi:
-    title: "接口文档"
-    version: 1.0
-    group:
-      default:
-        api-rule: package
-        api-rule-resources:
-          - com.dysf.bi.controller

@@ -1,8 +1,6 @@
-package com.yupi.springbootinit.service;
+package com.dysf.bi.service;
 
 import javax.annotation.Resource;
-
-import com.dysf.bi.service.UserService;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -21,7 +19,7 @@ public class UserServiceTest {
 
     @Test
     void userRegister() {
-        String userAccount = "yupi";
+        String userAccount = "dysf";
         String userPassword = "";
         String checkPassword = "123456";
         try {

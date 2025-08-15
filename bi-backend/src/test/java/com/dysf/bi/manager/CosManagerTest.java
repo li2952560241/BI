@@ -1,19 +1,23 @@
-package com.yupi.springbootinit;
+package com.dysf.bi.manager;
 
+import javax.annotation.Resource;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 
 /**
- * 主类测试
+ * Cos 操作测试
  *
  * @author <a href="https://github.com/liyupi">程序员鱼皮</a>
  * @from <a href="https://yupi.icu">编程导航知识星球</a>
  */
 @SpringBootTest
-class MainApplicationTests {
+class CosManagerTest {
+
+    @Resource
+    private CosManager cosManager;
 
     @Test
-    void contextLoads() {
+    void putObject() {
+        cosManager.putObject("test", "test.json");
     }
-
 }

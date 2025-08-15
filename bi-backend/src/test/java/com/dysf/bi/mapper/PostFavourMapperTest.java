@@ -1,9 +1,8 @@
-package com.yupi.springbootinit.mapper;
+package com.dysf.bi.mapper;
 
 import com.baomidou.mybatisplus.core.conditions.query.QueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.dysf.bi.mapper.PostFavourMapper;
 import com.dysf.bi.model.entity.Post;
 import javax.annotation.Resource;
 import org.junit.jupiter.api.Assertions;

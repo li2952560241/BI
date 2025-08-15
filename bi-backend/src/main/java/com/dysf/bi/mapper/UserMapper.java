@@ -1,11 +1,10 @@
 package com.dysf.bi.mapper;
 
-import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.dysf.bi.model.entity.User;
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 
 /**
- * 用户数据库操作
- *
+ * @Entity com.dysf.bi.model.entity.User
  */
 public interface UserMapper extends BaseMapper<User> {
 

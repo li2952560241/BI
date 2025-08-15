@@ -1,6 +1,5 @@
-package com.yupi.springbootinit.mapper;
+package com.dysf.bi.mapper;
 
-import com.dysf.bi.mapper.PostMapper;
 import com.dysf.bi.model.entity.Post;
 import java.util.Date;
 import java.util.List;
