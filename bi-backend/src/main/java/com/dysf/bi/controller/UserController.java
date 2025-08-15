@@ -6,7 +6,6 @@ import com.dysf.bi.common.BaseResponse;
 import com.dysf.bi.common.DeleteRequest;
 import com.dysf.bi.common.ErrorCode;
 import com.dysf.bi.common.ResultUtils;
-import com.dysf.bi.config.WxOpenConfig;
 import com.dysf.bi.constant.UserConstant;
 import com.dysf.bi.exception.BusinessException;
 import com.dysf.bi.exception.ThrowUtils;
@@ -44,8 +43,6 @@ public class UserController {
     @Resource
     private UserService userService;
 
-    @Resource
-    private WxOpenConfig wxOpenConfig;
 
     // region 登录相关
 
