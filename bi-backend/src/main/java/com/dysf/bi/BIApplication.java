@@ -16,10 +16,10 @@ import org.springframework.scheduling.annotation.EnableScheduling;
 @MapperScan("com.dysf.bi.mapper")
 @EnableScheduling
 @EnableAspectJAutoProxy(proxyTargetClass = true, exposeProxy = true)
-public class MainApplication {
+public class BIApplication {
 
     public static void main(String[] args) {
-        SpringApplication.run(MainApplication.class, args);
+        SpringApplication.run(BIApplication.class, args);
     }
 
 }
