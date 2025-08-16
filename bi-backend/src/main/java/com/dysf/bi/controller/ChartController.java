@@ -190,6 +190,8 @@ public class ChartController {
         }
         userInput.append(userGoal).append("\n");
         userInput.append("原始数据：").append("\n");
+        // TODO 考虑其他的压缩发方式，对于大量的表格数据而已。
+        // TODO 一个表存储数据 但是每一列中都会有一个表，所以可以考虑分表的情况
         // 压缩后的数据（把multipartFile传进来）
         String csvData = ExcelUtils.excelToCsv(multipartFile);
         userInput.append(csvData).append("\n");
