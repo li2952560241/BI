@@ -87,3 +87,8 @@ cos:
     secretKey: xxx
     region: xxx
     bucket: xxx
+
+deepseek:
+  client:
+    endpoint: https://api.deepseek.com
+    api-key: sk-c46ea531d5c44dcd89802839f3ae8075
