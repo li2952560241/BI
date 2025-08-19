@@ -1,4 +1,4 @@
-import { listMyChartByPageUsingPost } from '@/services/yubi/chartController';
+import { listMyChartByPageUsingPost } from '@/services/bi/chartController';
 
 import { useModel } from '@@/exports';
 import {Avatar, Card, List, message, Result} from 'antd';

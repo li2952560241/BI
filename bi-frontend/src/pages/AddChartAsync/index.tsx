@@ -1,4 +1,4 @@
-import {genChartByAiAsyncUsingPost} from '@/services/yubi/chartController';
+import {genChartByAiAsyncUsingPost} from '@/services/bi/chartController';
 import { UploadOutlined } from '@ant-design/icons';
 import {Button, Card, Form, Input, message, Select, Space, Upload} from 'antd';
 import TextArea from 'antd/es/input/TextArea';

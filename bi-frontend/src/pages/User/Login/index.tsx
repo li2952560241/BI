@@ -1,6 +1,6 @@
 import Footer from '@/components/Footer';
-import { listChartByPageUsingPost } from '@/services/yubi/chartController';
-import { getLoginUserUsingGet, userLoginUsingPost } from '@/services/yubi/userController';
+import { listChartByPageUsingPost } from '@/services/bi/chartController';
+import { getLoginUserUsingGet, userLoginUsingPost } from '@/services/bi/userController';
 import { Link } from '@@/exports';
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { LoginForm, ProFormText } from '@ant-design/pro-components';
@@ -89,7 +89,7 @@ const Login: React.FC = () => {
           title="智能 BI"
           subTitle={
             <a href="https://yupi.icu" target="_blank">
-              
+
             </a>
           }
           onFinish={async (values) => {
