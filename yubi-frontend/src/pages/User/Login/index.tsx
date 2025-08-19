@@ -86,10 +86,10 @@ const Login: React.FC = () => {
             maxWidth: '75vw',
           }}
           logo={<img alt="logo" src="/logo.svg" />}
-          title="鱼智能 BI"
+          title="智能 BI"
           subTitle={
             <a href="https://yupi.icu" target="_blank">
-              编程导航知识星球的原创项目
+              
             </a>
           }
           onFinish={async (values) => {
