@@ -13,7 +13,9 @@ public class MqInitMain {
         try {
             // 创建连接工厂
             ConnectionFactory factory = new ConnectionFactory();
-            factory.setHost("localhost");
+            factory.setHost("182.92.181.38"); // RabbitMQ服务器地址
+            factory.setUsername("admin"); // 替换为你的RabbitMQ用户名（如之前配置的admin）
+            factory.setPassword("123456"); // 替换为该用户的密码
             // 创建连接
             Connection connection = factory.newConnection();
             // 创建通道

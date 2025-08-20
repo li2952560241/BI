@@ -115,7 +115,7 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <UserOutlined />,
                 }}
-                placeholder={'请输入用户名'}
+                placeholder={'测试账号：TWTW'}
                 rules={[
                   {
                     required: true,
@@ -129,7 +129,7 @@ const Login: React.FC = () => {
                   size: 'large',
                   prefix: <LockOutlined />,
                 }}
-                placeholder={'请输入密码'}
+                placeholder={'测试密码：12345678'}
                 rules={[
                   {
                     required: true,

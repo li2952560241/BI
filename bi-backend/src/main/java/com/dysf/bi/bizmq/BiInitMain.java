@@ -12,19 +12,33 @@ public class BiInitMain {
     public static void main(String[] args) {
         try {
             ConnectionFactory factory = new ConnectionFactory();
-            factory.setHost("localhost");
+            factory.setHost("182.92.181.38"); // RabbitMQ服务器地址
+            factory.setUsername("admin"); // 替换为你的RabbitMQ用户名（如之前配置的admin）
+            factory.setPassword("123456"); // 替换为该用户的密码
+            // 可选：若端口不是默认5672，需指定端口
+            // factory.setPort(5672);
+
             Connection connection = factory.newConnection();
             Channel channel = connection.createChannel();
-            String EXCHANGE_NAME =  BiMqConstant.BI_EXCHANGE_NAME;
-            channel.exchangeDeclare(EXCHANGE_NAME, "direct");
 
-            // 创建队列，随机分配一个队列名称
+            String EXCHANGE_NAME = BiMqConstant.BI_EXCHANGE_NAME;
+            // 声明交换机（持久化、非自动删除）
+            channel.exchangeDeclare(EXCHANGE_NAME, "direct", true, false, null);
+
             String queueName = BiMqConstant.BI_QUEUE_NAME;
+            // 声明队列（持久化、非排他、非自动删除）
             channel.queueDeclare(queueName, true, false, false, null);
-            channel.queueBind(queueName, EXCHANGE_NAME,  BiMqConstant.BI_ROUTING_KEY);
+            // 绑定队列到交换机
+            channel.queueBind(queueName, EXCHANGE_NAME, BiMqConstant.BI_ROUTING_KEY);
+
+            // 执行成功后打印提示
+            System.out.println("交换机、队列创建并绑定成功！");
+
+            // 关闭资源
+            channel.close();
+            connection.close();
         } catch (Exception e) {
-
+            e.printStackTrace(); // 打印异常，方便排查错误
         }
-
     }
 }
