@@ -7,6 +7,8 @@ import type { RunTimeLayoutConfig } from '@umijs/max';
 import { history, Link } from '@umijs/max';
 import { AvatarDropdown, AvatarName } from './components/RightContent/AvatarDropdown';
 import { errorConfig } from './requestConfig';
+import AutoRefresh from './components/AutoRefresh';
+import defaultSettings from '../config/defaultSettings';
 
 const isDev = process.env.NODE_ENV === 'development';
 const loginPath = '/user/login';
@@ -16,6 +18,7 @@ const loginPath = '/user/login';
  * */
 export async function getInitialState(): Promise<{
   currentUser?: API.LoginUserVO;
+  settings?: any;
 }> {
   const fetchUserInfo = async () => {
     try {
@@ -32,10 +35,11 @@ export async function getInitialState(): Promise<{
     const currentUser = await fetchUserInfo();
     return {
       currentUser,
+      settings: defaultSettings,
     };
   }
 
-  return {};
+  return { settings: defaultSettings };
 }
 
 // ProLayout 支持的api https://procomponents.ant.design/components/layout
@@ -50,7 +54,7 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       },
     },
     waterMarkProps: {
-      content: initialState?.currentUser?.name,
+      content: initialState?.currentUser?.userName,
     },
     footerRender: () => <Footer />,
     onPageChange: () => {
@@ -97,6 +101,26 @@ export const layout: RunTimeLayoutConfig = ({ initialState, setInitialState }) =
       return (
         <>
           {children}
+          {/* 全局自动刷新组件 - 每3秒静默刷新 */}
+          <AutoRefresh 
+            interval={5000}
+            enabled={true} // 在所有环境下启用
+            onRefresh={async () => {
+              // 静默刷新用户信息
+              try {
+                const res = await getLoginUserUsingGet();
+                if (res.data) {
+                  setInitialState((prevState) => ({
+                    ...prevState,
+                    currentUser: res.data,
+                  }));
+                }
+              } catch (error) {
+                // 静默处理错误
+                console.log('Auto refresh user info failed:', error);
+              }
+            }}
+          />
           <SettingDrawer
             disableUrlParams
             enableDarkTheme
