@@ -188,7 +188,7 @@ public class ChartController {
         ThrowUtils.throwIf(size > ONE_MB, ErrorCode.PARAMS_ERROR, "文件超过 1M");
         // 校验文件后缀 aaa.png
         String suffix = FileUtil.getSuffix(originalFilename);
-        final List<String> validFileSuffixList = Arrays.asList("xlsx","xls");
+        final List<String> validFileSuffixList = Arrays.asList("xlsx","xls","csv");
         ThrowUtils.throwIf(!validFileSuffixList.contains(suffix), ErrorCode.PARAMS_ERROR, "文件后缀非法");
 
 
@@ -297,7 +297,7 @@ public class ChartController {
         ThrowUtils.throwIf(size > ONE_MB, ErrorCode.PARAMS_ERROR, "文件超过 1M");
         // 校验文件后缀 aaa.png
         String suffix = FileUtil.getSuffix(originalFilename);
-        final List<String> validFileSuffixList = Arrays.asList("xlsx", "xls");
+        final List<String> validFileSuffixList = Arrays.asList("xlsx", "xls","csv");
         ThrowUtils.throwIf(!validFileSuffixList.contains(suffix), ErrorCode.PARAMS_ERROR, "文件后缀非法");
 
         User loginUser = userService.getLoginUser(request);
@@ -417,7 +417,7 @@ public class ChartController {
         ThrowUtils.throwIf(size > ONE_MB, ErrorCode.PARAMS_ERROR, "文件超过 1M");
         // 校验文件后缀 aaa.png
         String suffix = FileUtil.getSuffix(originalFilename);
-        final List<String> validFileSuffixList = Arrays.asList("xlsx", "xls");
+        final List<String> validFileSuffixList = Arrays.asList("xlsx", "xls","csv");
         ThrowUtils.throwIf(!validFileSuffixList.contains(suffix), ErrorCode.PARAMS_ERROR, "文件后缀非法");
 
         User loginUser = userService.getLoginUser(request);
