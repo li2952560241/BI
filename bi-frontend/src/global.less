@@ -50,9 +50,216 @@ ol {
       }
     }
   }
+
+  .ant-form {
+    .ant-form-item {
+      margin-bottom: 16px;
+      
+      .ant-form-item-label {
+        padding-bottom: 4px;
+        
+        > label {
+          font-size: 14px;
+          height: 32px;
+          line-height: 32px;
+        }
+      }
+      
+      .ant-form-item-control {
+        .ant-input,
+        .ant-select,
+        .ant-input-number {
+          height: 40px;
+          font-size: 16px; // 移动端输入框字体大小
+        }
+        
+        .ant-btn {
+          height: 40px;
+          font-size: 16px;
+          padding: 0 16px;
+        }
+      }
+    }
+  }
+
+  .ant-card {
+    margin-bottom: 16px;
+    
+    .ant-card-head {
+      padding: 0 16px;
+      
+      .ant-card-head-title {
+        font-size: 16px;
+        padding: 12px 0;
+      }
+    }
+    
+    .ant-card-body {
+      padding: 16px;
+    }
+  }
+
+  .ant-space {
+    gap: 8px !important;
+    
+    .ant-btn {
+      flex: 1;
+      min-width: 80px;
+    }
+  }
+
+  .ant-pagination {
+    text-align: center;
+    
+    .ant-pagination-item,
+    .ant-pagination-prev,
+    .ant-pagination-next {
+      min-width: 36px;
+      height: 36px;
+      line-height: 36px;
+    }
+  }
+
+  .ant-list {
+    .ant-list-item {
+      padding: 12px 0;
+      
+      .ant-list-item-meta {
+        .ant-list-item-meta-title {
+          font-size: 16px;
+          margin-bottom: 4px;
+        }
+        
+        .ant-list-item-meta-description {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .ant-upload {
+    .ant-upload-drag {
+      padding: 20px;
+      
+      .ant-upload-drag-container {
+        .ant-upload-text {
+          font-size: 16px;
+        }
+        
+        .ant-upload-hint {
+          font-size: 14px;
+        }
+      }
+    }
+  }
+
+  .echarts-for-react {
+    width: 100% !important;
+    height: 300px !important;
+  }
+
+  .ant-input-search {
+    .ant-input {
+      height: 40px;
+      font-size: 16px;
+    }
+    
+    .ant-input-search-button {
+      height: 40px;
+      padding: 0 16px;
+    }
+  }
+
+  .ant-result {
+    padding: 24px 16px;
+    
+    .ant-result-title {
+      font-size: 20px;
+      margin-bottom: 8px;
+    }
+    
+    .ant-result-subtitle {
+      font-size: 14px;
+    }
+  }
+
+  .ant-avatar {
+    width: 40px;
+    height: 40px;
+  }
+
+  .ant-tag {
+    font-size: 12px;
+    padding: 2px 8px;
+    height: 24px;
+    line-height: 20px;
+  }
+}
+
+@media (min-width: 769px) and (max-width: 1024px) {
+  .ant-form {
+    .ant-form-item {
+      .ant-form-item-control {
+        .ant-input,
+        .ant-select,
+        .ant-input-number {
+          height: 36px;
+        }
+        
+        .ant-btn {
+          height: 36px;
+        }
+      }
+    }
+  }
+  
+  .echarts-for-react {
+    height: 400px !important;
+  }
 }
 
 .margin-16 {
-  // 在元素的下方增加16像素的外边距
   margin-bottom: 16px;
+}
+
+.mobile-padding {
+  padding: 16px;
+}
+
+.mobile-margin {
+  margin: 16px;
+}
+
+.mobile-full-width {
+  width: 100% !important;
+}
+
+.mobile-text-center {
+  text-align: center;
+}
+
+.mobile-hidden {
+  @media (max-width: 768px) {
+    display: none !important;
+  }
+}
+
+.mobile-visible {
+  @media (min-width: 769px) {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .ant-btn,
+  .ant-input,
+  .ant-select,
+  .ant-upload {
+    -webkit-tap-highlight-color: transparent;
+    
+    &:active {
+      transform: scale(0.98);
+      transition: transform 0.1s ease;
+    }
+  }
 }

@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Card, Button, Space, Typography, Tag } from 'antd';
 import { useAutoRefresh } from '@/hooks/useAutoRefresh';
+import useResponsive from '@/hooks/useResponsive';
 
 const { Title, Text } = Typography;
 
@@ -11,10 +12,11 @@ const AutoRefreshTest: React.FC = () => {
   const [refreshCount, setRefreshCount] = useState(0);
   const [lastRefreshTime, setLastRefreshTime] = useState<Date>(new Date());
   const [startTime, setStartTime] = useState<Date>(new Date());
+  const { isMobile, isTablet } = useResponsive();
 
   // 使用自动刷新Hook，每3秒刷新一次
   const { isRefreshing, lastRefreshTime: hookLastRefreshTime, manualRefresh } = useAutoRefresh({
-    interval: 5000,
+    interval: 3000,
     enabled: true,
     onRefresh: async () => {
       // 模拟数据刷新
@@ -46,11 +48,15 @@ const AutoRefreshTest: React.FC = () => {
   };
 
   return (
-    <div style={{ padding: 24 }}>
-      <Title level={2}>自动刷新功能测试</Title>
+    <div style={{ padding: isMobile ? 16 : 24 }}>
+      <Title level={isMobile ? 3 : 2} className="mobile-text-center">自动刷新功能测试</Title>
       
-      <Card title="自动刷新状态" style={{ marginBottom: 16 }}>
-        <Space direction="vertical" size="large" style={{ width: '100%' }}>
+      <Card title="自动刷新状态" style={{ marginBottom: 16 }} className="mobile-padding">
+        <Space 
+          direction="vertical" 
+          size={isMobile ? "middle" : "large"} 
+          style={{ width: '100%' }}
+        >
           <div>
             <Text strong>刷新状态：</Text>
             <Tag color={isRefreshing ? 'processing' : 'success'}>
@@ -80,21 +86,33 @@ const AutoRefreshTest: React.FC = () => {
         </Space>
       </Card>
 
-      <Card title="手动操作">
-        <Space>
+      <Card title="手动操作" className="mobile-padding">
+        <Space 
+          direction={isMobile ? "vertical" : "horizontal"}
+          size={isMobile ? "middle" : "small"}
+          className="mobile-full-width"
+        >
           <Button 
             type="primary" 
             onClick={handleManualRefresh}
             loading={isRefreshing}
+            size={isMobile ? "large" : "middle"}
+            className="mobile-full-width"
           >
             手动刷新
           </Button>
           
-          <Button onClick={handleReset}>重置计数</Button>
+          <Button 
+            onClick={handleReset}
+            size={isMobile ? "large" : "middle"}
+            className="mobile-full-width"
+          >
+            重置计数
+          </Button>
         </Space>
       </Card>
 
-      <Card title="说明" style={{ marginTop: 16 }}>
+      <Card title="说明" style={{ marginTop: 16 }} className="mobile-padding">
         <Text>
           此页面用于测试自动刷新功能。页面会每3秒自动刷新一次，更新刷新计数和时间。
           您可以观察到：
@@ -114,4 +132,4 @@ const AutoRefreshTest: React.FC = () => {
   );
 };
 
-export default AutoRefreshTest; 
+export default AutoRefreshTest;

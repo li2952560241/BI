@@ -6,6 +6,7 @@ import ReactECharts from 'echarts-for-react';
 import React, { useEffect, useState } from 'react';
 import Search from "antd/es/input/Search";
 import { useAutoRefresh } from '@/hooks/useAutoRefresh';
+import useResponsive from '@/hooks/useResponsive';
 
 /**
  * 我的图表页面
@@ -25,6 +26,9 @@ const MyChartPage: React.FC = () => {
   const [chartList, setChartList] = useState<API.Chart[]>();
   const [total, setTotal] = useState<number>(0);
   const [loading, setLoading] = useState<boolean>(true);
+  
+  // 将useResponsive Hook调用移到最前面
+  const { isMobile, isTablet } = useResponsive();
 
   const loadData = async () => {
     setLoading(true);
@@ -54,7 +58,7 @@ const MyChartPage: React.FC = () => {
 
   // 使用自动刷新Hook，每3秒静默刷新数据
   const { isRefreshing } = useAutoRefresh({
-    interval: 5000,
+    interval: 3000,
     enabled: true, // 启用自动刷新
     onRefresh: async () => {
       // 静默刷新，不显示loading状态
@@ -86,17 +90,95 @@ const MyChartPage: React.FC = () => {
     loadData();
   }, [searchParams]);
 
+  // 响应式网格配置
+  const getGridConfig = () => {
+    if (isMobile) {
+      return {
+        gutter: 16,
+        xs: 1,
+        sm: 1,
+        md: 1,
+        lg: 1,
+        xl: 1,
+        xxl: 1,
+      };
+    }
+    if (isTablet) {
+      return {
+        gutter: 16,
+        xs: 1,
+        sm: 1,
+        md: 1,
+        lg: 2,
+        xl: 2,
+        xxl: 2,
+      };
+    }
+    return {
+      gutter: 16,
+      xs: 1,
+      sm: 1,
+      md: 1,
+      lg: 2,
+      xl: 2,
+      xxl: 2,
+    };
+  };
+
+  // 响应式分页配置
+  const getPaginationConfig = () => {
+    const baseConfig = {
+      ...searchParams,
+      pageSize: searchParams.pageSize,
+      total: total,
+      onChange: (page: number, pageSize: number) => {
+        setSearchParams({
+          ...searchParams,
+          current: page,
+          pageSize,
+        })
+      },
+      onShowSizeChange: (current: number, size: number) => {
+        setSearchParams({
+          ...searchParams,
+          current: 1,
+          pageSize: size,
+        })
+      },
+      size: isMobile ? "small" as const : "default" as const,
+    };
+
+    if (isMobile) {
+      return {
+        ...baseConfig,
+        showSizeChanger: false,
+        showQuickJumper: false,
+        showTotal: (total: number) => `共 ${total} 条`,
+        simple: true,
+      };
+    }
+
+    return {
+      ...baseConfig,
+      showSizeChanger: true,
+      showQuickJumper: true,
+      showTotal: (total: number) => `共 ${total} 条记录`,
+    };
+  };
+
   return (
     <div className="my-chart-page">
       {/* 自动刷新状态指示器（可选，用于调试） */}
       {/* {isRefreshing && <div style={{ display: 'none' }}>正在静默刷新...</div>} */}
       
-      <Card title="我的图表">
+      <Card title="我的图表" className="mobile-padding">
         <div style={{ marginBottom: 16 }}>
           <Search
             placeholder="请输入图表名称"
             enterButton
             loading={loading}
+            size={isMobile ? "large" : "middle"}
+            className="mobile-full-width"
             onSearch={(value) => {
               setSearchParams({
                 ...initSearchParams,
@@ -106,43 +188,13 @@ const MyChartPage: React.FC = () => {
           />
         </div>
         <List
-          grid={{
-            gutter: 16,
-            xs: 1,
-            sm: 1,
-            md: 1,
-            lg: 2,
-            xl: 2,
-            xxl: 2,
-          }}
-          pagination={{
-            ...searchParams,
-            pageSize: searchParams.pageSize,
-            total: total,
-            onChange: (page, pageSize) => {
-              setSearchParams({
-                ...searchParams,
-                current: page,
-                pageSize,
-              })
-            },
-            onShowSizeChange: (current, size) => {
-              setSearchParams({
-                ...searchParams,
-                current: 1,
-                pageSize: size,
-              })
-            },
-            showSizeChanger: true,
-            showQuickJumper: true,
-            showTotal: (total) => `共 ${total} 条记录`,
-            size: 'default',
-          }}
+          grid={getGridConfig()}
+          pagination={getPaginationConfig()}
           dataSource={chartList}
           loading={loading}
           renderItem={(item) => (
             <List.Item key={item.id}>
-              <Card style={{ width: '100%' }}>
+              <Card style={{ width: '100%' }} className="mobile-padding">
                 <List.Item.Meta
                   avatar={<Avatar src={currentUser?.userAvatar} />}
                   title={item.name}
@@ -181,7 +233,13 @@ const MyChartPage: React.FC = () => {
                           <p><strong>分析结论：</strong>{item.genResult}</p>
                         </div>
                         <div style={{ marginBottom: 16 }}>
-                          <ReactECharts option={JSON.parse(item.genChart ?? '{}')} />
+                          <ReactECharts 
+                            option={JSON.parse(item.genChart ?? '{}')} 
+                            style={{
+                              height: isMobile ? '250px' : '300px',
+                              width: '100%'
+                            }}
+                          />
                         </div>
                       </>
                     )

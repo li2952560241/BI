@@ -4,6 +4,7 @@ import {Button, Card, Col, Divider, Form, Input, message, Row, Select, Space, Sp
 import TextArea from 'antd/es/input/TextArea';
 import React, { useState } from 'react';
 import ReactECharts from 'echarts-for-react';
+import useResponsive from '@/hooks/useResponsive';
 
 /**
  * 添加图表页面
@@ -13,6 +14,7 @@ const AddChart: React.FC = () => {
   const [chart, setChart] = useState<API.BiResponse>();
   const [option, setOption] = useState<any>();
   const [submitting, setSubmitting] = useState<boolean>(false);
+  const { isMobile, isTablet } = useResponsive();
 
   /**
    * 提交
@@ -51,25 +53,61 @@ const AddChart: React.FC = () => {
     setSubmitting(false);
   };
 
+  // 响应式列配置
+  const getColSpan = () => {
+    if (isMobile) return 24;
+    if (isTablet) return 12;
+    return 12;
+  };
+
+  // 响应式表单标签配置
+  const getFormLabelCol = () => {
+    if (isMobile) return { span: 24 };
+    if (isTablet) return { span: 6 };
+    return { span: 4 };
+  };
+
+  const getFormWrapperCol = () => {
+    if (isMobile) return { span: 24 };
+    if (isTablet) return { span: 18 };
+    return { span: 16 };
+  };
+
   return (
     <div className="add-chart">
-      <Row gutter={24}>
-        <Col span={12}>
-          <Card title="智能分析">
-            <Form name="addChart" labelAlign="left" labelCol={{ span: 4 }}
-                  wrapperCol={{ span: 16 }} onFinish={onFinish} initialValues={{}}>
+      <Row gutter={isMobile ? 16 : 24}>
+        <Col span={getColSpan()}>
+          <Card title="智能分析" className="mobile-padding">
+            <Form 
+              name="addChart" 
+              labelAlign={isMobile ? "left" : "left"}
+              labelCol={getFormLabelCol()}
+              wrapperCol={getFormWrapperCol()}
+              onFinish={onFinish} 
+              initialValues={{}}
+              layout={isMobile ? "vertical" : "horizontal"}
+            >
               <Form.Item
                 name="goal"
                 label="分析目标"
                 rules={[{ required: true, message: '请输入分析目标' }]}
               >
-                <TextArea placeholder="请输入你的分析需求，比如：分析网站用户的增长情况" />
+                <TextArea 
+                  placeholder="请输入你的分析需求，比如：分析网站用户的增长情况" 
+                  rows={isMobile ? 4 : 3}
+                  className="mobile-full-width"
+                />
               </Form.Item>
               <Form.Item name="name" label="图表名称">
-                <Input placeholder="请输入图表名称" />
+                <Input 
+                  placeholder="请输入图表名称" 
+                  className="mobile-full-width"
+                />
               </Form.Item>
               <Form.Item name="chartType" label="图表类型">
                 <Select
+                  placeholder="请选择图表类型"
+                  className="mobile-full-width"
                   options={[
                     { value: '折线图', label: '折线图' },
                     { value: '柱状图', label: '柱状图' },
@@ -80,31 +118,73 @@ const AddChart: React.FC = () => {
                 />
               </Form.Item>
               <Form.Item name="file" label="原始数据">
-                <Upload name="file" maxCount={1}>
-                  <Button icon={<UploadOutlined />}>上传 CSV 文件</Button>
+                <Upload 
+                  name="file" 
+                  maxCount={1}
+                  className="mobile-full-width"
+                >
+                  <Button 
+                    icon={<UploadOutlined />} 
+                    className="mobile-full-width"
+                    size={isMobile ? "large" : "middle"}
+                  >
+                    上传 CSV 文件
+                  </Button>
                 </Upload>
               </Form.Item>
 
-              <Form.Item wrapperCol={{ span: 16, offset: 4 }}>
-                <Space>
-                  <Button type="primary" htmlType="submit" loading={submitting} disabled={submitting}>
+              <Form.Item 
+                wrapperCol={isMobile ? { span: 24 } : { span: 16, offset: 4 }}
+                className="mobile-text-center"
+              >
+                <Space 
+                  direction={isMobile ? "vertical" : "horizontal"} 
+                  size={isMobile ? "middle" : "small"}
+                  className="mobile-full-width"
+                >
+                  <Button 
+                    type="primary" 
+                    htmlType="submit" 
+                    loading={submitting} 
+                    disabled={submitting}
+                    size={isMobile ? "large" : "middle"}
+                    className="mobile-full-width"
+                  >
                     提交
                   </Button>
-                  <Button htmlType="reset">重置</Button>
+                  <Button 
+                    htmlType="reset"
+                    size={isMobile ? "large" : "middle"}
+                    className="mobile-full-width"
+                  >
+                    重置
+                  </Button>
                 </Space>
               </Form.Item>
             </Form>
           </Card>
         </Col>
-        <Col span={12}>
-          <Card title="分析结论">
+        <Col span={getColSpan()}>
+          <Card title="分析结论" className="mobile-padding">
             {chart?.genResult ?? <div>请先在左侧进行提交</div>}
             <Spin spinning={submitting}/>
           </Card>
           <Divider />
-          <Card title="可视化图表">
+          <Card title="可视化图表" className="mobile-padding">
             {
-              option ? <ReactECharts option={option} /> : <div>请先在左侧进行提交</div>
+              option ? (
+                <div className="chart-container">
+                  <ReactECharts 
+                    option={option} 
+                    style={{ 
+                      height: isMobile ? '300px' : '400px',
+                      width: '100%'
+                    }}
+                  />
+                </div>
+              ) : (
+                <div>请先在左侧进行提交</div>
+              )
             }
             <Spin spinning={submitting}/>
           </Card>
@@ -113,4 +193,5 @@ const AddChart: React.FC = () => {
     </div>
   );
 };
+
 export default AddChart;
