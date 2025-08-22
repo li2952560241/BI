@@ -60,10 +60,11 @@ public class UserController {
         String userAccount = userRegisterRequest.getUserAccount();
         String userPassword = userRegisterRequest.getUserPassword();
         String checkPassword = userRegisterRequest.getCheckPassword();
-        if (StringUtils.isAnyBlank(userAccount, userPassword, checkPassword)) {
+        String username = userRegisterRequest.getUserName();
+        if (StringUtils.isAnyBlank(username,userAccount, userPassword, checkPassword)) {
             return null;
         }
-        long result = userService.userRegister(userAccount, userPassword, checkPassword);
+        long result = userService.userRegister(username,userAccount, userPassword, checkPassword);
         return ResultUtils.success(result);
     }
 
