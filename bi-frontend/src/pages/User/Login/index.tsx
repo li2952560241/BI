@@ -26,12 +26,11 @@ const Login: React.FC = () => {
     };
   });
 
-  // 仅在挂载时执行一次的调试请求，避免重复触发
   useEffect(() => {
     listChartByPageUsingPost({}).then((res) => {
       console.error('res', res);
     });
-  }, []);
+  });
 
   /**
    * 登陆成功后，获取用户登录信息
@@ -42,7 +41,7 @@ const Login: React.FC = () => {
       flushSync(() => {
         setInitialState((s) => ({
           ...s,
-          currentUser: (userInfo as any).data,
+          currentUser: userInfo,
         }));
       });
     }
@@ -51,20 +50,17 @@ const Login: React.FC = () => {
   const handleSubmit = async (values: API.UserLoginRequest) => {
     try {
       // 登录
-      const msg = await userLoginUsingPost({ ...values });
-      if (msg.data) {
+      const res = await userLoginUsingPost(values);
+      if (res.code === 0) {
         const defaultLoginSuccessMessage = '登录成功！';
         message.success(defaultLoginSuccessMessage);
         await fetchUserInfo();
-        /** 此方法会跳转到 redirect 参数所在的位置 */
-        if (!history) return;
-        const { query } = history.location as any;
-        const { redirect } = query as { redirect: string };
-        history.push(redirect || '/');
+        const urlParams = new URL(window.location.href).searchParams;
+        history.push(urlParams.get('redirect') || '/');
         return;
+      } else {
+        message.error(res.message);
       }
-      console.log(msg);
-      // 如果失败去设置用户错误信息
     } catch (error) {
       const defaultLoginFailureMessage = '登录失败，请重试！';
       console.log(error);
